@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <Windows.h>
 #include <conio.h>
 #include<string.h>  
@@ -18,9 +18,6 @@ int oj[225] = { 0, };
 	int key = 0;
 	int s = 3;
 
-	for (int i = 224; i > 224 - score; i--) {
-		oj[i] = i;
-	}
 	move[8][3] = 222; //꼬리
 	move[8][4] = 223;
 	move[8][5] = 224; //몸통
@@ -28,11 +25,9 @@ int oj[225] = { 0, };
 
 	//Move(s);
 	while (1) {
-		Move();
-		map(move);
-		Sleep(300);
 		system("cls");
 		while (1) {
+
 			if (_kbhit()) {
 
 				key = _getch();
@@ -44,58 +39,59 @@ int oj[225] = { 0, };
 						if (direction != 4) {
 							direction = 1;
 
-
-							break;
 						}
+							break;
+						
 
 						//위 화살표
 					case 75: 
 						if (direction != 3) {
 							direction = 2;
 
-
-							break;
+							
 						}
-
+							break;
 						//왼쪽 화살표
 					case 77:
 						if (direction != 2) {
 							direction = 3;
-
-
-							break;
 						}
-
+							break;
 						//오른쪽 화살표
 					case 80:
 						if (direction != 1) {
 							direction = 4;
-							break;
+							
 						}
-
+							break;
 						//아래 화살표
 					default:
 						break;
 					}
 				}
+
 			}
+
 			else
 			{	
 
 				break;
+
 			}
 
 		}
+		Move();
+		map(move);
 
 
+		Sleep(250);
 	}
 	return 0;
 }
 
 	void Move() {
 
-		int move1[17][17];
-		int s1 = 0;
+
 		int a = 0;
 		int e = 0;
 
@@ -107,7 +103,7 @@ int oj[225] = { 0, };
 					if (move[i][j] == 225 && a == 0) {
 
 						if (move[i - 1][j] == -255) {
-							e = 1;
+							score += 1;
 						}
 						move[i - 1][j] = move[i][j];
 						move[i][j] = -225;
@@ -139,6 +135,7 @@ int oj[225] = { 0, };
 					}
 				}
 			}
+			a = 0;
 			for (int i = 1; i < 16; i++) {
 				for (int j = 1; j < 16; j++) {
 					if (move[i][j] == -(225 - score) && a == 0) {
@@ -150,9 +147,7 @@ int oj[225] = { 0, };
 				}
 			}
 			a = 0;  
-			if (e == 1) {
-				score += 1;
-			}
+			
 		}
 		else if (direction == 2) { // 왼쪽
 			a = 0;
@@ -161,7 +156,7 @@ int oj[225] = { 0, };
 					if (move[i][j] == 225 && a == 0) {
 
 						if (move[i][j - 1] == -255) {
-							e = 1;
+							score += 1; // 길이 증가
 						}
 						move[i][j - 1] = move[i][j];
 						move[i][j] = -225;
@@ -192,6 +187,7 @@ int oj[225] = { 0, };
 					}
 				}
 			}
+			a = 0;
 			for (int i = 1; i < 16; i++) {
 				for (int j = 1; j < 16; j++) {
 					if (move[i][j] == -(225 - score) && a == 0) {
@@ -203,9 +199,7 @@ int oj[225] = { 0, };
 				}
 			}
 			a = 0;
-			if (e == 1) {
-				score += 1;
-			}
+
 		}
 
 		else if (direction == 3) { //오른쪽
@@ -215,7 +209,7 @@ int oj[225] = { 0, };
 					if (move[i][j] == 225 && a == 0) {
 
 						if (move[i][j + 1] == -255) {
-							e = 1;
+							score += 1;
 						}
 						move[i][j + 1] = move[i][j];
 						move[i][j] = -225;
@@ -232,8 +226,7 @@ int oj[225] = { 0, };
 					for (int j = 1; j < 16; j++) {
 						if (move[i][j] == k && a == 0) {
 							move[i][j] = -k;
-							printf("%d", move[8][3]);
-							Sleep(500);
+							
 							a = 1;
 						}
 					}
@@ -250,6 +243,7 @@ int oj[225] = { 0, };
 					}
 				}
 			}
+			a = 0;
 			for (int i = 1; i < 16; i++) {
 				for (int j = 1; j < 16; j++) {
 					if (move[i][j] == -(225 - score) && a == 0) {
@@ -261,9 +255,6 @@ int oj[225] = { 0, };
 				}
 			}
 			a = 0;
-			if (e == 1) {
-				score += 1;
-			}
 		}
 		else if (direction == 4) { //아래	
 			a = 0;
@@ -271,7 +262,7 @@ int oj[225] = { 0, };
 				for (int j = 1; j < 16; j++) {
 					if (move[i][j] == 225 && a == 0) {
 						if (move[i + 1][j] == -255) {
-							e = 1;
+							score += 1;
 						}
 
 						move[i + 1][j] = move[i][j];
@@ -304,6 +295,7 @@ int oj[225] = { 0, };
 					}
 				}
 			}
+			a = 0;
 			for (int i = 1; i < 16; i++) {
 				for (int j = 1; j < 16; j++) {
 					if (move[i][j] == -(225 - score) && a == 0) {
@@ -315,9 +307,7 @@ int oj[225] = { 0, };
 				}
 			}
 			a = 0;
-			if (e == 1) {
-				score += 1;
-			}
+			
 		}
 	}
 
